@@ -2,24 +2,14 @@
   "version": 2,
   "builds": [
   	{ "src": "lambdas/index.js", "use": "@now/node" },
-  	{ "src": "lambdas/crawl.js", "use": "@now/node" },
-  	{ "src": "lambdas/check-data.js", "use": "@now/node" },
+  	{ "src": "lambdas/crawl-nasional.js", "use": "@now/node" },
+  	{ "src": "lambdas/crawl-kota.js", "use": "@now/node" },
+  	{ "src": "lambdas/crawl-kab.js", "use": "@now/node" }
   ],
   "routes": [
-    {
-      "src": "/",
-      "dest": "/lambdas/index.js",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/crawl",
-      "dest": "/lambdas/crawl.js",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/check-data",
-      "dest": "/lambdas/check-data.js",
-      "methods": ["GET"]
-    },
+    { "src": "/", "dest": "/lambdas/index.js", "methods": ["GET"] },
+    { "src": "/crawl-nasional", "dest": "/lambdas/crawl-nasional.js", "methods": ["GET"] },
+    { "src": "/crawl-kota", "dest": "/lambdas/crawl-kota.js", "methods": ["GET"] },
+    { "src": "/crawl-kab", "dest": "/lambdas/crawl-kab.js", "methods": ["GET"] }
   ]
 }
