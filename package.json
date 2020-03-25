@@ -1,0 +1,21 @@
+{
+  "name": "api-covid-jabar",
+  "version": "1.0.0",
+  "description": "api-covid-jabar aggregation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "api",
+    "fastify"
+  ],
+  "author": "ans4175",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "moment": "^2.24.0"
+  }
+}
