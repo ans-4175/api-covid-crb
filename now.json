@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [{ "src": "lambdas/index.js", "use": "@now/node" }],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/lambdas/index.js",
+      "methods": ["GET"]
+    }
+  ]
+}
