@@ -128,40 +128,27 @@ const scrapeNasional = async () => {
 }
 
 module.exports = async (req, res) => {
-  try {
-    const dataKota = await scrapeKota();
-    const dataKab = await scrapeKab();
-    const dataNasional = await scrapeNasional();
-    const lastUpdate = moment();
-    const updateData = {
-        odp_kota: dataKota.odp,
-        odp_kab: dataKab.odp,
-        odp_prov: null,
-        odp_nasional: dataNasional.odp,
-        pdp_kota: dataKota.pdp,
-        pdp_kab: dataKab.pdp,
-        pdp_prov: null,
-        pdp_nasional: dataNasional.pdp,
-        positif_kota: dataKota.positif,
-        positif_kab: dataKab.positif,
-        positif_prov: null,
-        positif_nasional: dataNasional.positif,
-        rawat_kota: dataKota.rawat,
-        rawat_kab: dataKab.rawat,
-        rawat_prov: null,
-        rawat_nasional: dataNasional.rawat,
-        mati_kota: dataKota.mati,
-        mati_kab: dataKab.mati,
-        mati_prov: null,
-        mati_nasional: dataNasional.mati,
-        last_updated: lastUpdate.toISOString(),
-        last_updated_ts: lastUpdate.unix()
+    const respObj = {};
+    try {
+        const dataKota = await scrapeKota();
+        Object.assign(respObj, dataKota);
+    } catch (err) {
+        console.error(err);
     }
-    res.json({
-    	addData: await addData(updateData),
-    	updateLatest: await updateSheets(updateData),
-    });
-  } catch (err) {
-  	res.json({ err });
-  }
+
+    try {
+        const dataKab = await scrapeKab();
+        Object.assign(respObj, dataKab);
+    } catch (err) {
+        console.error(err);
+    }
+
+    try {
+        const dataNasional = await scrapeNasional();
+        Object.assign(respObj, dataNasional);
+    } catch (err) {
+        console.error(err);
+    }
+
+    res.json(respObj)
 };
