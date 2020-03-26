@@ -7,9 +7,12 @@
   	{ "src": "lambdas/crawl-kab.js", "use": "@now/node" }
   ],
   "routes": [
-    { "src": "/", "dest": "/lambdas/index.js", "methods": ["GET"] },
+    { "src": "/", "dest": "/lambdas/index.js", "methods": ["GET", "OPTIONS"] },
     { "src": "/crawl-nasional", "dest": "/lambdas/crawl-nasional.js", "methods": ["GET"] },
     { "src": "/crawl-kota", "dest": "/lambdas/crawl-kota.js", "methods": ["GET"] },
     { "src": "/crawl-kab", "dest": "/lambdas/crawl-kab.js", "methods": ["GET"] }
-  ]
+  ],
+  "env": {
+    "STEIN_URL": "@stein-url-covid-crb"
+  }
 }
