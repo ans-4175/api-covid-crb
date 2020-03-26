@@ -1,5 +1,5 @@
 const { scrapeNasional } = require('../libs/crawlers');
-const { updateSheets } = require('../libs/stein');
+const { updateSheets, addRaw } = require('../libs/stein');
 
 module.exports = async (req, res) => {
     try {
@@ -11,8 +11,17 @@ module.exports = async (req, res) => {
             rawat_nasional: data.rawat,
             mati_nasional: data.mati
         }
+        const addData = {
+            type: 'nasional',
+            odp: data.odp,
+            pdp: data.pdp,
+            positif: data.positif,
+            rawat: data.rawat,
+            mati: data.mati,
+        }
         res.json({
             updateLatest: await updateSheets(updateData),
+            addRaw: await addRaw(addData),
         });
     } catch (err) {
         res.json({ err });

@@ -1,16 +1,15 @@
 const axios = require('axios');
 const moment = require('moment');
 
-const addData = async (data) => {
+const addRaw = async (data) => {
     const lastUpdate = moment();
     const addValue = Object.assign({}, data, {
-        tag: lastUpdate.unix(),
-        last_updated: lastUpdate.toISOString(),
-        last_updated_ts: lastUpdate.unix(),
+        ts_parsed: lastUpdate.toISOString(),
+        ts: lastUpdate.unix(),
     });
     const response = await axios({
         method: 'post',
-        url: `https://api.steinhq.com/v1/storages/5d66929d1ec06404b5572f6f/covid-19`,
+        url: `https://api.steinhq.com/v1/storages/5d66929d1ec06404b5572f6f/raw`,
         data: JSON.stringify([addValue])
     });
     return (response.status === 200) ? true : false;
@@ -36,5 +35,5 @@ const updateSheets = async (data) => {
 
 module.exports = {
     updateSheets,
-    addData
+    addRaw
 }
