@@ -1,28 +1,9 @@
-const { scrapeKota } = require('../libs/crawlers');
-const { updateSheets, addRaw } = require('../libs/stein');
+const { scrapeKota } = require('../libs/scraping');
+const crawler = require('../libs/crawler');
 
 module.exports = async (req, res) => {
     try {
-        const data = await scrapeKota();
-        const updateData = {
-            odp_kota: data.odp,
-            pdp_kota: data.pdp,
-            positif_kota: data.positif,
-            rawat_kota: data.rawat,
-            mati_kota: data.mati
-        }
-        const addData = {
-            type: 'kota',
-            odp: data.odp,
-            pdp: data.pdp,
-            positif: data.positif,
-            rawat: data.rawat,
-            mati: data.mati,
-        }
-        res.json({
-            updateLatest: await updateSheets(updateData),
-            addRaw: await addRaw(addData),
-        });
+        res.json(await crawler(scrapeKota, 'kota'));
     } catch (err) {
         res.json({ err });
     }
