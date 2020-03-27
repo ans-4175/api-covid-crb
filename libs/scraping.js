@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const moment = require('moment');
 
 const scrapeKota = async () => {
     const html = await axios.get("http://covid19.cirebonkota.go.id");
@@ -101,8 +102,78 @@ const scrapeNasional = async () => {
     }
 }
 
+const scrapeJabar = async () => {
+    const resp = await axios.get('https://covid19-public.digitalservice.id/analytics/aggregation/');
+    const respData = resp.data;
+
+    const today = moment().format('DD-MM-YYYY');
+    const elFind = respData.find((el) => el.tanggal === today);
+    const data = {
+        odp: 0,
+        pdp: 0,
+        positif: 0,
+        rawat: 0,
+        mati: 0,
+    }
+    if (elFind) {
+        data.odp = elFind.total_odp;
+        data.pdp = elFind.total_pdp;
+        data.positif = elFind.total_positif_saat_ini;
+        data.rawat = elFind.total_positif_saat_ini - (elFind.total_meninggal + elFind.total_sembuh);
+        data.mati = elFind.total_meninggal;
+    }
+    
+    return data;
+}
+
+const scrapeBandung = async () => {
+    const html = await axios.get("https://covid19.bandung.go.id");
+    const $ = cheerio.load(html.data);
+    const dataKota = {
+        odp: 0,
+        pdp: 0,
+        positif: 0,
+        rawat: 0,
+        mati: 0,
+    }
+
+    const panels = $('#root > div > div > div:nth-child(2) > div:nth-child(2) > div > div').find('.col-lg');
+    panels.each((idx, elem) => {
+        const value = $(elem).find('h2.text-center').text().trim();
+        switch (idx) {
+            case 0:
+                dataKota['odp'] = value;
+                break;
+            case 1:
+                dataKota['pdp'] = value;
+                break;
+            case 2:
+                dataKota['positif'] = value;
+                break;
+        }
+        if (idx === 2) {
+            const details = $(elem).find('h2.text-danger');
+            details.each((idx, elem) => {
+                const value = $(elem).text().trim();
+                switch (idx) {
+                    case 0:
+                        dataKota['rawat'] = value;
+                        break;
+                    case 2:
+                        dataKota['mati'] = value;
+                        break;
+                }
+            });
+        }
+    });
+
+    return dataKota;
+}
+
 module.exports = {
     scrapeKab,
     scrapeKota,
+    scrapeBandung,
+    scrapeJabar,
     scrapeNasional,
 }
