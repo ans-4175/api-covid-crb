@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const moment = require('moment');
 
 const scrapeKota = async () => {
     const html = await axios.get("http://covid19.cirebonkota.go.id");
@@ -101,8 +102,38 @@ const scrapeNasional = async () => {
     }
 }
 
+const scrapeJabar = async () => {
+    const resp = await axios.get('https://covid19-public.digitalservice.id/analytics/aggregation/');
+    const respData = resp.data;
+
+    const today = moment().format('DD-MM-YYYY');
+    const elFind = respData.find((el) => el.tanggal === today);
+    const data = {
+        odp: 0,
+        pdp: 0,
+        positif: 0,
+        rawat: 0,
+        mati: 0,
+    }
+    if (elFind) {
+        data.odp = elFind.total_odp;
+        data.pdp = elFind.total_pdp;
+        data.positif = elFind.total_positif_saat_ini;
+        data.rawat = elFind.total_positif_saat_ini - (elFind.total_meninggal + elFind.total_sembuh);
+        data.mati = elFind.total_meninggal;
+    }
+    
+    return data;
+}
+
+const scrapeBandung = async () => {
+    
+}
+
 module.exports = {
     scrapeKab,
     scrapeKota,
+    scrapeBandung,
+    scrapeJabar,
     scrapeNasional,
 }
