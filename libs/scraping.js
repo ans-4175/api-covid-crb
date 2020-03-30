@@ -127,47 +127,18 @@ const scrapeJabar = async () => {
 }
 
 const scrapeBandung = async () => {
-    const html = await axios.get("https://covid19.bandung.go.id");
-    const $ = cheerio.load(html.data);
-    const dataKota = {
-        odp: 0,
-        pdp: 0,
-        positif: 0,
-        rawat: 0,
-        mati: 0,
+    const resp = await axios.get('https://covid19.bandung.go.id/api/covid19bdg/v1/covidsummary/get',
+        { headers: { Authorization: 'RkplDPdGFxTSjARZkZUYi3FgRdakJy' }}
+    );
+    const respData = resp.data.data;
+    
+    return {
+        odp: respData.odp,
+        pdp: respData.pdp,
+        positif: respData.positif,
+        rawat: respData.positif - (respData.meninggal + respData.sembuh),
+        mati: respData.meninggal,
     }
-
-    const panels = $('#root > div > div > div:nth-child(2) > div:nth-child(2) > div > div').find('.col-lg');
-    panels.each((idx, elem) => {
-        const value = $(elem).find('h2.text-center').text().trim();
-        switch (idx) {
-            case 0:
-                dataKota['odp'] = value;
-                break;
-            case 1:
-                dataKota['pdp'] = value;
-                break;
-            case 2:
-                dataKota['positif'] = value;
-                break;
-        }
-        if (idx === 2) {
-            const details = $(elem).find('h2.text-danger');
-            details.each((idx, elem) => {
-                const value = $(elem).text().trim();
-                switch (idx) {
-                    case 0:
-                        dataKota['rawat'] = value;
-                        break;
-                    case 2:
-                        dataKota['mati'] = value;
-                        break;
-                }
-            });
-        }
-    });
-
-    return dataKota;
 }
 
 module.exports = {

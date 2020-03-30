@@ -4,6 +4,7 @@
   	{ "src": "lambdas/index.js", "use": "@now/node" },
   	{ "src": "lambdas/crawl-nasional.js", "use": "@now/node" },
   	{ "src": "lambdas/crawl-jabar.js", "use": "@now/node" },
+    { "src": "lambdas/crawl-bdg.js", "use": "@now/node" },
   	{ "src": "lambdas/crawl-kota.js", "use": "@now/node" },
   	{ "src": "lambdas/crawl-kab.js", "use": "@now/node" }
   ],
@@ -11,6 +12,7 @@
     { "src": "/", "dest": "/lambdas/index.js", "methods": ["GET", "OPTIONS"] },
     { "src": "/crawl-nasional", "dest": "/lambdas/crawl-nasional.js", "methods": ["GET"] },
     { "src": "/crawl-jabar", "dest": "/lambdas/crawl-jabar.js", "methods": ["GET"] },
+    { "src": "/crawl-bdg", "dest": "/lambdas/crawl-bdg.js", "methods": ["GET"] },
     { "src": "/crawl-kota", "dest": "/lambdas/crawl-kota.js", "methods": ["GET"] },
     { "src": "/crawl-kab", "dest": "/lambdas/crawl-kab.js", "methods": ["GET"] }
   ],
