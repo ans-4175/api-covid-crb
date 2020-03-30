@@ -13,7 +13,7 @@ const scrapeKota = async () => {
         mati: 0,
     }
 
-    const panels = $('#beranda > div > div > div:nth-child(4) > div').find('.col-sm-4');
+    const panels = $('#beranda > div > div > div:nth-child(5) > div').find('.col-sm-4');
     panels.each((idx, elem) => {
         const title = $(elem).find('h2.p-0').text().trim();
         switch (idx) {
