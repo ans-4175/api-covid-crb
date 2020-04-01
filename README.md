@@ -8,7 +8,7 @@ Kami mengamati sumber data level Nasional dan Provinsi tidak cukup cepat/cermat 
 2. Kab Cirebon - http://covid19.cirebonkab.go.id - scraping situs
 3. Jawa Barat - https://covid19-public.digitalservice.id/analytics/aggregation/ - API JDS
 4. Nasional - https://api.kawalcovid19.id/case/summary - API KawalCovid  
-Bonus 5. Kota Bandung - https://covid19.bandung.go.id/api/covid19bdg/v1/covidsummary/get - API situs COVID Bandung
+Bonus:: Kota Bandung - https://covid19.bandung.go.id/api/covid19bdg/v1/covidsummary/get - API situs COVID Bandung
 
 ## Teknikal
 Menggunakan stack:  
