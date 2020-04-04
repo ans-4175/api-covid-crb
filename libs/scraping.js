@@ -90,7 +90,7 @@ const scrapeKab = async () => {
 }
 
 const scrapeNasional = async () => {
-    const resp = await axios.get('https://api.kawalcovid19.id/case/summary');
+    const resp = await axios.get('https://api.kawalcovid19.id/v1/api/case/summary');
     const respData = resp.data;
     
     return {
